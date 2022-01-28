@@ -1,0 +1,20 @@
+{% extends 'flatpages/default.html' %}
+
+{% load filters %}
+
+{% block title %}
+News
+{% endblock title %}
+
+
+{% block content %}
+<h1>Все новости </h1>
+<h2>{{News|length}}</h2>
+<hr>
+{% for Post in News %}
+   <h2><small> {{ Post.title }}, {{Post.dateCreation|date:'d M Y'}}:</small></h2>
+   <p> {{ Post.text|truncatechars:50 |block_words }} </p>
+{% endfor %}
+{% endblock content %}
+
+

@@ -1,0 +1,78 @@
+user1 = User.objects.create_user(username ='Саша')
+
+user2 = User.objects.create_user(username ='Андрей')
+
+Author.objects.create(authorUser=user1)
+Author.objects.create(authorUser=user2)
+
+Category.objects.create(name='Гейминг')
+Category.objects.create(name='IT')
+Category.objects.create(name='Животные')
+Category.objects.create(name='Робототехника')
+
+Post.objects.create(author=author, categoryType='NW', title='Роботы по образу животного', text = 'Были сконструированы роботы по образу и подобию нескольких видов животных, они очень милые')
+
+Post.objects.get(id=1).postCategory.add(Category.objects.get(id=4))
+Post.objects.get(id=1).postCategory.add(Category.objects.get(id=3))
+
+author2 = Author.objects.get(id=2)
+
+Post.objects.create(author=author2, categoryType='AR', title='IT сейчас', text = 'Все больше геймеров мечтают в будущем стать разработчиками')
+
+Post.objects.get(id=2).postCategory.add(Category.objects.get(id=1))
+Post.objects.get(id=2).postCategory.add(Category.objects.get(id=2))
+
+Post.objects.create(author=author2, categoryType='AR', title='Проблемы ITшников', text = 'Их котики очень любят спать на клавиатуре рабочих ноутбуков')
+
+Comment.objects.create(commentPost=Post.objects.get(id=1), commentUser=Author.objects.get(id=1).authorUser, text='Супер мило')
+Comment.objects.create(commentPost=Post.objects.get(id=1), commentUser=Author.objects.get(id=1).authorUser, text='Хотелось бы посмотреть')
+Comment.objects.create(commentPost=Post.objects.get(id=2), commentUser=Author.objects.get(id=1).authorUser, text='Что правда, то правда')
+Comment.objects.create(commentPost=Post.objects.get(id=4), commentUser=Author.objects.get(id=1).authorUser, text='Да уж, есть такая проблема :)')
+
+Comment.objects.get(id=1).like()
+Comment.objects.get(id=1).like()
+Comment.objects.get(id=1).like()
+Comment.objects.get(id=2).dislike()
+Comment.objects.get(id=3).like()
+Comment.objects.get(id=3).like()
+Comment.objects.get(id=4).like()
+Comment.objects.get(id=4).like()
+Comment.objects.get(id=4).dislike()
+
+a1 = Author.objects.get(id=1)
+a2 = Author.objects.get(id=2)
+
+Comment.objects.create(commentPost=Post.objects.get(id=2), commentUser=Author.objects.get(id=2).authorUser, text='Жиза')
+
+Comment.objects.get(id=6).like()
+Comment.objects.get(id=6).like()
+Comment.objects.get(id=6).like()
+Comment.objects.get(id=6).dislike()
+
+a2.update_rating()
+
+Post.objects.get(id=1).like()
+Post.objects.get(id=1).like()
+Post.objects.get(id=1).like()
+Post.objects.get(id=2).like()
+Post.objects.get(id=2).like()
+Post.objects.get(id=3).dislike()
+Post.objects.get(id=4).like()
+Post.objects.get(id=4).like()
+
+a1.update_rating()
+a2.update_rating()
+
+r= Author.objects.order_by('-ratingAuthor')#[:1] вышел бы только 1 автор
+
+for i in r:
+...     i.ratingAuthor
+...     i.authorUser.username
+
+Вышло:
+"14
+'Саша '
+11
+'Андрей'
+0
+'Саша'"
